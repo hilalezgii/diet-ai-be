@@ -1,7 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { MealsFoodsService } from './meals_foods.service';
 import { CreateMealsFoodDto } from './dto/create-meals_food.dto';
 import { UpdateMealsFoodDto } from './dto/update-meals_food.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('meals-foods')
 export class MealsFoodsController {
@@ -23,7 +33,10 @@ export class MealsFoodsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealsFoodDto: UpdateMealsFoodDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMealsFoodDto: UpdateMealsFoodDto,
+  ) {
     return this.mealsFoodsService.update(+id, updateMealsFoodDto);
   }
 

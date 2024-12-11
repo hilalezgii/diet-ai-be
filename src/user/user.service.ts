@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './create-user.dto';
 import { User } from './user.entity';
@@ -17,7 +17,7 @@ export class UserService {
 
     // Şifreyi hash'le
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds); // saltRounds ekleyin
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const user = this.userRepository.create({
       email,
@@ -29,5 +29,13 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userRepository.find(); // Tüm kullanıcıları getirir
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } }); // Email'e göre kullanıcıyı bul
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+    return user;
   }
 }

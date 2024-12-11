@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDietPlanDto } from './dto/create-diet_plan.dto';
 import { UpdateDietPlanDto } from './dto/update-diet_plan.dto';
+import { InjectRepository } from "@nestjs/typeorm";
+import { Conversations } from "../conversations/entities/conversation.entity";
+import { Repository } from "typeorm";
+import { DietPlan } from "./entities/diet_plan.entity";
 
 @Injectable()
 export class DietPlansService {
+  constructor(
+    @InjectRepository(DietPlan)
+    private readonly dietPlanRepository: Repository<DietPlan>,
+  ) {}
   create(createDietPlanDto: CreateDietPlanDto) {
-    return 'This action adds a new dietPlan';
+    const newDietPLan = {
+      ...createDietPlanDto,
+      created_at: new Date(),
+    };
+    return this.dietPlanRepository.create(newDietPLan);
   }
 
   findAll() {

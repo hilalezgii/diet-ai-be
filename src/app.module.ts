@@ -10,6 +10,7 @@ import { DietPlansModule } from './diet_plans/diet_plans.module';
 import { MealsModule } from './meals/meals.module';
 import { FoodsModule } from './foods/foods.module';
 import { MealsFoodsModule } from './meals_foods/meals_foods.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { MealsFoodsModule } from './meals_foods/meals_foods.module';
     MealsModule,
     FoodsModule,
     MealsFoodsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

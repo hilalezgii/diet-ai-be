@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDetailDto } from './dto/create-user_detail.dto';
 import { UpdateUserDetailDto } from './dto/update-user_detail.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserDetail } from './entities/user_detail.entity';
 
 @Injectable()
 export class UserDetailService {
+  constructor(
+    @InjectRepository(UserDetail)
+    private readonly userDetailRepository: Repository<UserDetail>,
+  ) {}
+
   create(createUserDetailDto: CreateUserDetailDto) {
-    return 'This action adds a new userDetail';
+    const newUserDetail = {
+      ...createUserDetailDto,
+      created_at: new Date(),
+    };
+    return this.userDetailRepository.create(newUserDetail);
   }
 
   findAll() {
