@@ -4,13 +4,12 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { UserDetailModule } from './user_detail/user_detail.module';
-import { ConversationsModule } from './conversations/conversations.module';
 import { MessagesModule } from './messages/messages.module';
-import { DietPlansModule } from './diet_plans/diet_plans.module';
-import { MealsModule } from './meals/meals.module';
-import { FoodsModule } from './foods/foods.module';
-import { MealsFoodsModule } from './meals_foods/meals_foods.module';
 import { AuthModule } from './auth/auth.module';
+import { ChatbotsModule } from './chatbots/chatbots.module';
+import { UserChatbotsModule } from './user_chatbots/user_chatbots.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -28,13 +27,12 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     UserDetailModule,
-    ConversationsModule,
     MessagesModule,
-    DietPlansModule,
-    MealsModule,
-    FoodsModule,
-    MealsFoodsModule,
     AuthModule,
+    ChatbotsModule,
+    UserChatbotsModule,
+    EventEmitterModule.forRoot(),
+    OpenaiModule,
   ],
 })
 export class AppModule {}

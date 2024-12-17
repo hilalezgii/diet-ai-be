@@ -5,16 +5,19 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity('users')
-export class User {
+@Entity('chatbots')
+export class Chatbots {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', length: 255, unique: true })
-  email: string;
+  name: string;
 
   @Column({ type: 'varchar', length: 255 })
-  password: string;
+  description: string;
+
+  @Column({ type: 'varchar' })
+  system_message: string;
 
   @CreateDateColumn()
   created_at: Date;

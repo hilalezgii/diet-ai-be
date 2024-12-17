@@ -10,13 +10,16 @@ export class Messages {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer', unique: true })
-  conversation_id: number;
+  @Column({ type: 'integer' })
+  user_id: number;
+
+  @Column({ type: 'integer' })
+  chatbot_id: number;
 
   @Column({ type: 'varchar', length: 255 })
   sender: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'text' })
   content: string;
 
   @UpdateDateColumn()

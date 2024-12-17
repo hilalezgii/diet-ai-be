@@ -12,20 +12,35 @@ export class UserDetailService {
     private readonly userDetailRepository: Repository<UserDetail>,
   ) {}
 
-  create(createUserDetailDto: CreateUserDetailDto) {
+  create(createUserDetailDto: CreateUserDetailDto, user_id: number) {
     const newUserDetail = {
       ...createUserDetailDto,
+      user_id,
       created_at: new Date(),
     };
-    return this.userDetailRepository.create(newUserDetail);
+
+    return this.userDetailRepository.save(newUserDetail);
   }
 
   findAll() {
     return `This action returns all userDetail`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userDetail`;
+  async findOne(user_id: number) {
+    const user = await this.userDetailRepository.findOne({
+      where: {
+        user_id,
+      },
+    });
+
+    if (!user) {
+      return {
+        status: 404,
+        message: 'Kullanıcı detayı bulunamadı',
+      };
+    }
+
+    return user;
   }
 
   update(id: number, updateUserDetailDto: UpdateUserDetailDto) {
