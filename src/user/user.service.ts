@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './create-user.dto';
 import { User } from './user.entity';
@@ -17,8 +17,17 @@ export class UserService {
     private readonly userChatbotService: UserChatbotsService,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
+
+    const hasUser = await this.findByEmail(email);
+
+    if (hasUser) {
+      return {
+        status: 404,
+        message: 'Hesabınız oluşturulamadı. Lütfen bilgileri kontrol edin.',
+      };
+    }
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -41,14 +50,11 @@ export class UserService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find(); // Tüm kullanıcıları getirir
+    return this.userRepository.find();
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { email } }); // Email'e göre kullanıcıyı bul
-    if (!user) {
-      throw new NotFoundException(`User with email ${email} not found`);
-    }
+    const user = await this.userRepository.findOne({ where: { email } });
     return user;
   }
 }

@@ -25,9 +25,7 @@ export class ChatbotsService {
     return await this.chatbotRepository.find();
   }
 
-  findOne(id: number) {
-    return this.chatbotRepository.findOne({ where: { id } });
-  }
+  findOne(id: number) {}
 
   update(id: number, updateChatbotDto: UpdateChatbotDto) {
     return `This action updates a #${id} chatbot`;

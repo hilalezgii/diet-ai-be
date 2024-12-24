@@ -58,7 +58,6 @@ export class MessagesService {
       ],
     };
 
-    /*
     const getMessages = (await this.openaiService.getMessagesData(
       openaiRequest,
     )) as OpenAI.ChatCompletion;
@@ -72,13 +71,10 @@ export class MessagesService {
       };
     }
 
-
-openAiResult?.result?.message?.content
-     */
     const newAssistantMessage = {
       chatbot_id: createMessageDto.chatbot_id,
       user_id: userId,
-      content: 'Merhaba',
+      content: openAiResult?.result?.message?.content,
       sender: 'assistant',
       created_at: new Date(),
     };
@@ -86,7 +82,7 @@ openAiResult?.result?.message?.content
     this.messageRepository.save(newAssistantMessage);
 
     return {
-      aiResult: 'Merhaba',
+      aiResult: openAiResult?.result?.message?.content,
       status: 200,
     };
   }
